@@ -3,7 +3,7 @@ import 'moment/locale/fr';
 
 import './App.css';
 import {useEffect, useState} from "react";
-//import tests from "./timings"
+import tests from "./timings"
 //import timings from "./timings-tmv"
 //import afup from "./afup"
 import logo from "./forum.svg"
@@ -152,8 +152,8 @@ function App() {
             setNow(moment());
 
             setCurrent(timings.find((timing) => {
-                return moment(timing.from).diff(now) >= 0 ||
-                    (timing.to && moment(timing.to).diff(now) >= 0);
+                const aim = timing.to ?? timing.from;
+                return moment(aim).diff(now) >= 0;
             }));
         }, 1000);
 
