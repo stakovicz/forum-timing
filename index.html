@@ -1,0 +1,21 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"/><link rel="icon" href="/forum-timing/favicon.ico"/><meta name="viewport" content="user-scalable=no,initial-scale=1,maximum-scale=1,minimum-scale=1,width=device-width,height=device-height,target-densitydpi=device-dpi"/><meta name="theme-color" content="#000000"/><meta name="description" content="Web site created using create-react-app"/><link rel="apple-touch-icon" href="/forum-timing/web-app-manifest-192x192.png"/><link rel="manifest" href="/forum-timing/manifest.json"/><title>Timing</title><script defer="defer" src="/forum-timing/static/js/main.74a3b351.js"></script><link href="/forum-timing/static/css/main.5b975c7b.css" rel="stylesheet"></head><body><noscript>You need to enable JavaScript to run this app.</noscript><div id="root"></div><script type="module">// keep screen always active
+        let wakelock;
+        async function lockWakeState() {
+            const canWakeLock = () => 'wakeLock' in navigator;
+
+            if (!canWakeLock()) return;
+            try {
+                wakelock = await navigator.wakeLock.request();
+                wakelock.addEventListener('release', () => {
+                    console.log('Screen Wake State Locked:', !wakelock.released);
+                });
+                console.log('Screen Wake State Locked:', !wakelock.released);
+            } catch (e) {
+                console.error('Failed to lock wake state with reason:', e.message);
+            }
+        }
+        function releaseWakeState() {
+            if (wakelock) wakelock.release();
+            wakelock = null;
+        }
+        await lockWakeState();</script><script type="module">function toggleFullScreen(e){document.fullscreenElement?document.exitFullscreen?.():e.requestFullscreen()}const body=document.querySelector("body");body.addEventListener("dblclick",function(){toggleFullScreen(body)})</script></body></html>
