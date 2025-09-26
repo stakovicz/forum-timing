@@ -114,37 +114,35 @@ function App() {
             .then((response) => {
                 response.json()
                     .then((data) => {
-                        console.log(data)
-                    const timingsFromSessions = Object.values(data)
-                        .filter((session) => {
-                            return session.trackTitle === track;
-                        })
-                        .sort((a, b) => moment(a.startTime) > moment(b.startTime))
-                        .map((session) => {
-                            return {
-                                name: session.title,
-                                from: session.startTime,
-                                to: session.endTime,
-                            }
-                        });
+                        const timingsFromSessions = Object.values(data.sessions)
+                            .filter((session) => {
+                                return session.trackTitle === track;
+                            })
+                            .sort((a, b) => moment(a.startTime) > moment(b.startTime))
+                            .map((session) => {
+                                return {
+                                    name: session.title,
+                                    from: session.startTime,
+                                    to: session.endTime,
+                                }
+                            });
+                        setTimings(timingsFromSessions);
+                        //setTimings(tests);
 
-                    setTimings(timingsFromSessions);
-                    //setTimings(tests);
+                        const trackFromSessions = Object.values(data.sessions)
+                            .map((session) => {
+                                return session.trackTitle;
+                            })
+                            .filter((value, index, array) => {
+                                return array.indexOf(value) === index
+                            })
+                            .sort((a, b) => {
+                                const [, roomA] = a.split(" - ");
+                                const [, roomB] = b.split(" - ");
 
-                    const trackFromSessions = Object.values(data)
-                        .map((session) => {
-                            return session.trackTitle;
-                        })
-                        .filter((value, index, array) => {
-                            return array.indexOf(value) === index
-                        })
-                        .sort((a, b) => {
-                            const [, roomA] = a.split(" - ");
-                            const [, roomB] = b.split(" - ");
-
-                            return roomA.localeCompare(roomB);
-                        });
-                    setTracks(trackFromSessions);
+                                return roomA.localeCompare(roomB);
+                            });
+                        setTracks(trackFromSessions);
                 })
             })
     }, [track]);
