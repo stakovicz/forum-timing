@@ -3,8 +3,8 @@
   <head>
     <meta charset="utf-8" />
     <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#000000" />
+      <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
+      <meta name="theme-color" content="#000000" />
     <meta
       name="description"
       content="Web site created using create-react-app"
@@ -62,7 +62,22 @@
             wakelock = null;
         }
         await lockWakeState();
-
     </script>
+  <script type="module">
+      function toggleFullScreen(element) {
+          if (!document.fullscreenElement) {
+              // If the document is not in full screen mode
+              // make the video full screen
+              element.requestFullscreen();
+          } else {
+              // Otherwise exit the full screen
+              document.exitFullscreen?.();
+          }
+      }
+      const body = document.querySelector("body");
+      body.addEventListener("dblclick", function () {
+          toggleFullScreen(body);
+      });
+  </script>
   </body>
 </html>
