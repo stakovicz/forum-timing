@@ -1,6 +1,6 @@
 {
-  "name": "Timing",
-  "short_name": "Timing",
+  "name": "ForumPHP Timing",
+  "short_name": "FPHPT",
   "icons": [
     {
       "src": "/web-app-manifest-192x192.png",
