@@ -1,86 +1,44 @@
 
 const timings = [
     {
-        name: "Briefing Trail Long 360 Expert Outdoor (63km)",
-        from: "2025-09-27T00:40:00.000+02:00",
-        to: "2025-09-27T00:54:00.000+02:00",
+        name: "Billetterie",
+        from: "2025-09-29T20:00:00.000+02:00",
+        to: "2025-09-29T20:05:00.000+02:00",
     },
     {
-        name: "Départ Trail Long",
-        from: "2025-09-26T22:00:00.000+02:00",
-        to: "2025-09-26T23:30:00.000+02:00",
+        name: "Badge",
+        from: "2025-09-29T20:05:00.000+02:00",
+        to: "2025-09-29T20:10:00.000+02:00",
     },
     {
-        name: "Départ Trail Long",
-        from: "2025-10-05T08:00:00.000+02:00",
+        name: "Speakers",
+        from: "2025-09-29T20:10:00.000+02:00",
+        to: "2025-09-29T20:40:00.000+02:00",
     },
     {
-        name: "Départ Trail Long",
-        from: "2025-10-05T08:00:00.000+02:00",
+        name: "Antennes",
+        from: "2025-09-29T20:40:00.000+02:00",
+        to: "2025-09-29T20:50:00.000+02:00",
     },
     {
-        name: "Départ Trail Long",
-        from: "2025-10-05T08:00:00.000+02:00",
+        name: "Anniversaires et animations",
+        from: "2025-09-29T20:50:00.000+02:00",
+        to: "2025-09-29T21:00:00.000+02:00",
     },
     {
-        name: "Départ Trail Long",
-        from: "2025-10-05T08:00:00.000+02:00",
+        name: "Stock",
+        from: "2025-09-29T21:00:00.000+02:00",
+        to: "2025-09-29T21:05:00.000+02:00",
     },
     {
-        name: "Départ Trail Long",
-        from: "2025-10-05T08:00:00.000+02:00",
+        name: "Équipe",
+        from: "2025-09-29T21:05:00.000+02:00",
+        to: "2025-09-29T21:20:00.000+02:00",
     },
     {
-        name: "Départ Trail Long",
-        from: "2025-10-05T08:00:00.000+02:00",
-    },
-    {
-        name: "Départ Trail Long",
-        from: "2025-10-05T08:00:00.000+02:00",
-    },
-    {
-        name: "Départ Trail Long",
-        from: "2025-10-05T08:00:00.000+02:00",
-    },
-    {
-        name: "Départ Trail Long",
-        from: "2025-10-05T08:00:00.000+02:00",
-    },
-    {
-        name: "Départ Trail Long",
-        from: "2025-10-05T08:00:00.000+02:00",
-    },
-    {
-        name: "Départ Trail Long",
-        from: "2025-10-05T08:00:00.000+02:00",
-    },
-    {
-        name: "Départ Trail Long",
-        from: "2025-10-05T08:00:00.000+02:00",
-    },
-    {
-        name: "Départ Trail Long",
-        from: "2025-10-05T08:00:00.000+02:00",
-    },
-    {
-        name: "Départ Trail Long",
-        from: "2025-10-05T08:00:00.000+02:00",
-    },
-    {
-        name: "Départ Trail Long",
-        from: "2025-10-05T08:00:00.000+02:00",
-    },
-    {
-        name: "Départ Trail Long",
-        from: "2025-10-05T08:00:00.000+02:00",
-    },
-    {
-        name: "Départ Trail Long",
-        from: "2025-10-05T08:00:00.000+02:00",
-    },
-    {
-        name: "Départ Trail Long",
-        from: "2025-10-05T08:00:00.000+02:00",
+        name: "Temps de questions",
+        from: "2025-09-29T21:20:00.000+02:00",
+        to: "2025-09-29T21:25:00.000+02:00",
     },
 
 ];

@@ -19,17 +19,17 @@ function Ftn({number, unit, hideIfZero = true}) {
 }
 
 function SelectTrack({tracks, setTrack})  {
+
     return (
         <div className="select-track">
             <img src={logo} alt="" className="logo"/>
-            <div>
-                <select onChange={(e) => setTrack(e.target.value)}>
-                    <option>Choisissez une track</option>
-                    {tracks.map((track, i) => (
-                        <option key={i} value={track}>{track}</option>
-                    ))}
-                </select>
-            </div>
+            {tracks.length > 0 ?
+            <select onChange={(e) => setTrack(e.target.value)}>
+                <option>Choisissez une track</option>
+                {tracks.map((track, i) => (
+                    <option key={i} value={track}>{track}</option>
+                ))}
+            </select> : null}
         </div>
     )
 }
@@ -126,8 +126,8 @@ function App() {
                                     to: session.endTime,
                                 }
                             });
-                        setTimings(timingsFromSessions);
-                        //setTimings(tests);
+                        //setTimings(timingsFromSessions);
+                        setTimings(tests);
 
                         const trackFromSessions = Object.values(data.sessions)
                             .map((session) => {
@@ -142,7 +142,7 @@ function App() {
 
                                 return roomA.localeCompare(roomB);
                             });
-                        setTracks(trackFromSessions);
+                        //setTracks(trackFromSessions);
                 })
             })
     }, [track]);
