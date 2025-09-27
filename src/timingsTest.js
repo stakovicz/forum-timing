@@ -1,5 +1,5 @@
 
-const timings = [
+const timingsTest = [
     {
         name: "Billetterie",
         from: "2025-09-29T20:00:00.000+02:00",
@@ -43,4 +43,4 @@ const timings = [
 
 ];
 
-export { timings as default};
+export { timingsTest as default};

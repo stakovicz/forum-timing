@@ -3,9 +3,7 @@ import 'moment/locale/fr';
 
 import './App.css';
 import {useEffect, useState} from "react";
-import tests from "./timings"
-//import timings from "./timings-tmv"
-//import afup from "./afup"
+import tests from "./timingsTest"
 import logo from "./forum.svg"
 
 function Ftn({number, unit, hideIfZero = true}) {
@@ -102,6 +100,48 @@ function Current({now, timing}) {
     </div>
 }
 
+function setDataTest({setTimings}) {
+    setTimings([...tests]);
+}
+
+function setData({setTimings, setTracks, track}) {
+
+    fetch("https://afup.org/event/forumphp2025/openfeedback.json")
+        .then((response) => {
+            response.json()
+                .then((data) => {
+                    const timingsFromSessions = Object.values(data.sessions)
+                        .filter((session) => {
+                            return session.trackTitle === track;
+                        })
+                        .sort((a, b) => moment(a.startTime) > moment(b.startTime))
+                        .map((session) => {
+                            return {
+                                name: session.title,
+                                from: session.startTime,
+                                to: session.endTime,
+                            }
+                        });
+                    setTimings(timingsFromSessions);
+
+                    const trackFromSessions = Object.values(data.sessions)
+                        .map((session) => {
+                            return session.trackTitle;
+                        })
+                        .filter((value, index, array) => {
+                            return array.indexOf(value) === index
+                        })
+                        .sort((a, b) => {
+                            const [, roomA] = a.split(" - ");
+                            const [, roomB] = b.split(" - ");
+
+                            return roomA.localeCompare(roomB);
+                        });
+                    setTracks(trackFromSessions);
+                })
+        })
+}
+
 function App() {
     const [now, setNow] = useState(moment());
     const [current, setCurrent] = useState();
@@ -110,41 +150,8 @@ function App() {
     const [track, setTrack] = useState(undefined);
 
     useEffect(() => {
-        fetch("https://afup.org/event/forumphp2025/openfeedback.json")
-            .then((response) => {
-                response.json()
-                    .then((data) => {
-                        const timingsFromSessions = Object.values(data.sessions)
-                            .filter((session) => {
-                                return session.trackTitle === track;
-                            })
-                            .sort((a, b) => moment(a.startTime) > moment(b.startTime))
-                            .map((session) => {
-                                return {
-                                    name: session.title,
-                                    from: session.startTime,
-                                    to: session.endTime,
-                                }
-                            });
-                        //setTimings(timingsFromSessions);
-                        setTimings(tests);
-
-                        const trackFromSessions = Object.values(data.sessions)
-                            .map((session) => {
-                                return session.trackTitle;
-                            })
-                            .filter((value, index, array) => {
-                                return array.indexOf(value) === index
-                            })
-                            .sort((a, b) => {
-                                const [, roomA] = a.split(" - ");
-                                const [, roomB] = b.split(" - ");
-
-                                return roomA.localeCompare(roomB);
-                            });
-                        //setTracks(trackFromSessions);
-                })
-            })
+        //setData({setTimings, setTracks, track});
+        setDataTest({setTimings, setTracks});
     }, [track]);
 
     useEffect(() => {
