@@ -16,18 +16,18 @@ function Ftn({number, unit, hideIfZero = true}) {
     </span>
 }
 
-function SelectTrack({tracks, setTrack})  {
+function SelectTrack({tracks, setTrack}) {
 
     return (
         <div className="select-track">
             <img src={logo} alt="" className="logo"/>
             {tracks.length > 0 ?
-            <select onChange={(e) => setTrack(e.target.value)}>
-                <option>Choisissez une track</option>
-                {tracks.map((track, i) => (
-                    <option key={i} value={track}>{track}</option>
-                ))}
-            </select> : null}
+                <select onChange={(e) => setTrack(e.target.value)}>
+                    <option>Choisissez une track</option>
+                    {tracks.map((track, i) => (
+                        <option key={i} value={track}>{track}</option>
+                    ))}
+                </select> : null}
         </div>
     )
 }
@@ -39,7 +39,7 @@ function Upcoming({current, timings}) {
 
     return <div className="upcoming">
         {timings.map((timing, i) => {
-            const duration = timing.to ? moment.duration(moment(timing.to).diff(timing.from)).minutes() : null;
+            const duration = timing.to ? moment.duration(timing.to.diff(timing.from)).minutes() : null;
             const passed = i < nextIndex;
             if (passed) {
                 return null;
@@ -48,8 +48,8 @@ function Upcoming({current, timings}) {
             return (<div key={i} className={`${passed ? "passed" : ""}`}>
                 <div className="datetime">
                     <div className="name">{timing.name}</div>
-                    {moment(timing.from).format("HH:mm")}
-                    {timing.to ? (moment(timing.to).format(" – HH:mm ")) : null}
+                    {timing.from.format("HH:mm")}
+                    {timing.to ? (timing.to.format(" – HH:mm ")) : null}
                     {duration ? <span>[{duration}min]</span> : null}
                 </div>
             </div>)
@@ -64,10 +64,14 @@ function Current({now, timing}) {
         if (!timing) {
             return;
         }
+        if (timing.from.diff() < 0) {
+            setRest(moment.duration(timing.to.diff()));
+        } else {
+            setRest(moment.duration(timing.from.diff()));
+        }
 
-        setRest(moment.duration(moment(timing.to ?? timing.from).diff()));
         if (timing.to) {
-            setInTalk(moment().isBetween(timing.from, timing.to));
+            setInTalk(now.isBetween(timing.from, timing.to));
         }
 
     }, [now, timing]);
@@ -80,28 +84,33 @@ function Current({now, timing}) {
         return null;
     }
 
-    const duration = timing.to ? moment.duration(moment(timing.to).diff(timing.from)).minutes() : null;
+    const duration = timing.to ? moment.duration(timing.to.diff(timing.from)).minutes() : null;
     const color = rest.asMinutes() <= 10 ? rest.asMinutes() <= 5 ? "red" : "orange" : "";
 
     return <div className="App-next">
         <div className="rest" style={{color: color}}>
             {inTalk && "🗣️ "}
-            <Ftn number={rest.days()} unit="j" />
-            <Ftn number={rest.hours()} unit="h" />
-            <Ftn number={rest.minutes()} unit="min" />
-            <Ftn number={rest.seconds()} unit="s" hideIfZero={false} />
+            <Ftn number={rest.days()} unit="j"/>
+            <Ftn number={rest.hours()} unit="h"/>
+            <Ftn number={rest.minutes()} unit="min"/>
+            <Ftn number={rest.seconds()} unit="s" hideIfZero={false}/>
         </div>
         <div className="datetime">
             <div className="name">{timing.name}</div>
-            {moment(timing.from).format("HH:mm")}
-            {timing.to ? (moment(timing.to).format(" – HH:mm ")) : null}
+            {timing.from.format("HH:mm")}
+            {timing.to ? (timing.to.format(" – HH:mm ")) : null}
             {duration ? <span>[{duration}min]</span> : null}
         </div>
     </div>
 }
 
 function setDataTest({setTimings}) {
-    setTimings([...tests]);
+    setTimings(tests.map((track, i) => ({
+        name: track.name,
+        from: moment(track.from),
+        to: track.to ? moment(track.to) : undefined
+    })));
+
 }
 
 function setData({setTimings, setTracks, track}) {
@@ -118,8 +127,8 @@ function setData({setTimings, setTracks, track}) {
                         .map((session) => {
                             return {
                                 name: session.title,
-                                from: session.startTime,
-                                to: session.endTime,
+                                from: moment(session.startTime),
+                                to: moment(session.endTime),
                             }
                         });
                     setTimings(timingsFromSessions);
@@ -150,8 +159,8 @@ function App() {
     const [track, setTrack] = useState(undefined);
 
     useEffect(() => {
-        //setData({setTimings, setTracks, track});
-        setDataTest({setTimings, setTracks});
+        setData({setTimings, setTracks, track});
+        //setDataTest({setTimings, setTracks});
     }, [track]);
 
     useEffect(() => {
@@ -164,7 +173,9 @@ function App() {
             }));
         }, 1000);
 
-        return () => {clearInterval(interval)}
+        return () => {
+            clearInterval(interval)
+        }
     }, [now, timings]);
 
     return (
@@ -181,9 +192,9 @@ function App() {
                 </div>
             </header>
             <main className="App-main">
-                <Current now={now} timing={current} />
-                <Upcoming current={current} timings={timings} />
-                <SelectTrack tracks={tracks} setTrack={setTrack} />
+                <Current now={now} timing={current}/>
+                <Upcoming current={current} timings={timings}/>
+                <SelectTrack tracks={tracks} setTrack={setTrack}/>
             </main>
         </div>
     );
