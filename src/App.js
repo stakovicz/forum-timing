@@ -141,8 +141,17 @@ function setData({setTimings, setTracks, track}) {
                             return array.indexOf(value) === index
                         })
                         .sort((a, b) => {
-                            const [, roomA] = a.split(" - ");
-                            const [, roomB] = b.split(" - ");
+                            let [, roomA] = a.split(" - ");
+                            let [, roomB] = b.split(" - ");
+
+                            // Happens for Hall Time Square
+                            if (roomA === undefined) {
+                                roomA = a;
+                            }
+
+                            if (roomB === undefined) {
+                                roomB = b;
+                            }
 
                             return roomA.localeCompare(roomB);
                         });
